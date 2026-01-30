@@ -1,36 +1,54 @@
+import menuCommands.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 public class Main {
 
-//    private static boolean isRunning = true;
-//
-//    Scanner scanner = new Scanner(System.in);
-//
-//while (isRunning) {
-//
-//        showMenu();
-//        String userInput = //принимаем значение со сканнера
-//
-//        if(userInput.equalsIgnorCase(add)) {}
-//        if(userInput.equalsIgnorCase(search)) {}
-//        if(userInput.equalsIgnorCase(list)) {}
-//        if(userInput.equalsIgnorCase(exit)) {
-//            "Программа завершает работу! До новых встреч!"
-//            isRunning = false;
-//        }
-//    }
-//
-//    public static void showMenu() {
-//        add - добавить что-то в формате таком-то
-//        search - найти
-//        list - показать
-//        exit - выход
-//    }
-//
-//    public static void addValidation() {}
-//
-//    public static void searchValidation() {}
-//
-//    public static void listValidation() {}
+    public static void main(String[] args) {
 
+        ShowMenu showMenu = new ShowMenu();
+
+        System.out.println("Здравствуй, дорогой друг!" +
+                "\nТебя приветствует база данных нашего автобусного парка." +
+                "\nЗагружаем меню..." +
+                "\n");
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        startProgram(showMenu);
+    }
+
+    private static void startProgram(ShowMenu showMenu) {
+        boolean isRunning = true;
+
+        Map<String, Command> menuCommands = new HashMap<>();
+        menuCommands.put("1", new AddBusCommand());
+        menuCommands.put("2", new SearchBusCommand());
+        menuCommands.put("3", new ShowAllBusesCommand());
+        menuCommands.put("4", new SortByParameterAndShowCommand());
+        menuCommands.put("5", new NumberOccurrencesCountingCommand());
+        menuCommands.put("0", new ExitCommand());
+
+        Scanner scanner = new Scanner(System.in);
+
+        while(isRunning) {
+
+            showMenu.show();
+            String userInput = scanner.nextLine();
+
+            if (menuCommands.containsKey(userInput)) {
+                menuCommands.get(userInput).execute();
+            } else {
+                System.out.println("Вы указали отсутствующий пункт меню.\n" +
+                        "Сделайте выбор заново.\n");
+            }
+        }
+    }
 
 }
-//finally I'm here
