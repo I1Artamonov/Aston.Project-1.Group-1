@@ -1,10 +1,11 @@
+import bus.Bus;
 import menuCommands.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
+
+    private static List<Bus> buses = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -51,4 +52,9 @@ public class Main {
         }
     }
 
+    public static void setBuses(List<Bus> buses) {
+        if (buses != null && !buses.isEmpty()) {
+            Main.buses = buses;
+        }
+    }
 }
