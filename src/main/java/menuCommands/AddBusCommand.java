@@ -1,11 +1,16 @@
 package menuCommands;
 
-import bus.Bus;
+
+import menuAddBusMethods.FromFileAdd;
+import menuAddBusMethods.ManualAdd;
+import menuAddBusMethods.MenuBusAdding;
+import menuAddBusMethods.RandomAdd;
+import startProgramm.Main;
 import userInputValidations.BusesCountValidation;
 import userInputValidations.AddMethodValidation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddBusCommand implements Command {
@@ -38,18 +43,21 @@ public class AddBusCommand implements Command {
             String userInput = scanner.nextLine();
             numberOfMethod = new AddMethodValidation(userInput).addMethodValidation();
 
-            if (busesCount == 0) {
+            if (numberOfMethod == 0) {
                 break;
             }
-
-            if (busesCount < 0) {
+            if (numberOfMethod < 0) {
                 System.out.println("Введите положительное число");
             }
         }
 
-        switch (numberOfMethod) {
-            case 1, 2 -> System.out.println("метод в разработке");
-            case 3 -> manualAdd(busesCount);
+        Map<Integer, MenuBusAdding> busAddingMethods = new HashMap<>();
+        busAddingMethods.put(1, new FromFileAdd(busesCount));
+        busAddingMethods.put(2, new RandomAdd(busesCount));
+        busAddingMethods.put(3, new ManualAdd(busesCount));
+
+        if (busAddingMethods.containsKey(numberOfMethod)) {
+            Main.setBuses(busAddingMethods.get(numberOfMethod).add());
         }
     }
 
@@ -59,10 +67,5 @@ public class AddBusCommand implements Command {
                 "2 - рандом\n" +
                 "3 - вручную\n" +
                 "0 - завершить работу программы");
-    }
-
-    private void manualAdd(int count) {
-        String[] busArray = new String[count];
-        //здесь сформированную коллекцию предать в мейн
     }
 }
