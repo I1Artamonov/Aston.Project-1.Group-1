@@ -59,4 +59,8 @@ public class Main {
             Main.buses = buses;
         }
     }
+
+    public static List<Bus> getBuses() {
+        return buses;
+    }
 }
