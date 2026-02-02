@@ -1,4 +1,4 @@
-package collectionTest;
+package collection;
 
 import customCollections.CustomList;
 import org.junit.jupiter.api.BeforeEach;
