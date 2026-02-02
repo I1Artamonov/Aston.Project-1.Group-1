@@ -2,7 +2,6 @@ package bus;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * @author YuliyaVasilenko
@@ -12,11 +11,10 @@ import lombok.NoArgsConstructor;
  */
 @Getter
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class Bus extends Car implements Comparable<Bus>, Generated<Bus> {
     private int number;
 
-    protected Bus(BusBuilder builder) {
+    Bus(BusBuilder builder) {
         super(builder.getModel(), builder.getMileage());
         this.number = builder.getNumber();
     }
@@ -37,18 +35,18 @@ public class Bus extends Car implements Comparable<Bus>, Generated<Bus> {
 
     @Override
     public int compareTo(Bus bus) {
+        if (this.getNumber() != bus.getNumber()) {
+            return this.getNumber() - bus.getNumber();
+        }
         if (this.getModel().compareTo(bus.getModel()) != 0) {
             return this.getModel().compareTo(bus.getModel());
         }
-        if (this.getMileage() != bus.getMileage()) {
-            return Integer.compare(this.getMileage(), bus.getMileage());
-        }
-        return Integer.compare(number, bus.getNumber());
+        return this.getMileage() - bus.getMileage();
     }
 
     @Override
     public String toString() {
-        return String.format("model: %25s | mileage:%5d | number:%5d",
-                getModel(), getMileage(), number);
+        return String.format("number:%5d | model: %25s | mileage:%5d",
+                number, getModel(), getMileage());
     }
 }

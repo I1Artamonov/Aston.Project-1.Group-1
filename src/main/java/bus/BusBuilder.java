@@ -10,9 +10,14 @@ import lombok.Getter;
  */
 @Getter
 public class BusBuilder {
+    private int number;
     private String model;
     private int mileage;
-    private int number;
+
+    public BusBuilder setNumber(int number) {
+        this.number = number;
+        return this;
+    }
 
     public BusBuilder setModel(String model) {
         this.model = model;
@@ -21,11 +26,6 @@ public class BusBuilder {
 
     public BusBuilder setMileage(int mileage) {
         this.mileage = mileage;
-        return this;
-    }
-
-    public BusBuilder setNumber(int number) {
-        this.number = number;
         return this;
     }
 

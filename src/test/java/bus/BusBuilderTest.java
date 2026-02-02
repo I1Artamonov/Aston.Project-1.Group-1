@@ -22,6 +22,14 @@ class BusBuilderTest {
     }
 
     @ParameterizedTest
+    @ValueSource(ints = {1, 5, 100, 1569})
+    void setNumber(int number) {
+        assertEquals(0, builder.getNumber());
+        builder.setNumber(number);
+        assertEquals(number, builder.getNumber());
+    }
+
+    @ParameterizedTest
     @ValueSource(strings = {"Icarus", "Mercedes", "MAZ"})
     void setModel(String model) {
         assertNull(builder.getModel());
@@ -37,14 +45,6 @@ class BusBuilderTest {
         assertEquals(mileage, builder.getMileage());
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 5, 100, 1569})
-    void setNumber(int number) {
-        assertEquals(0, builder.getNumber());
-        builder.setNumber(number);
-        assertEquals(number, builder.getNumber());
-    }
-
     @Test
     void build() {
         builder.setModel("Model").setMileage(100).setNumber(1);
@@ -55,12 +55,12 @@ class BusBuilderTest {
 
     @Test
     void build_Failure_ThrowsException() {
-        builder.setModel("Model").setMileage(1).setNumber(0);
+        builder.setNumber(0).setModel("Model").setMileage(1);
         Bus bus = new Bus(builder);
         assertFalse(bus.checkBuilding());
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> builder.build());
         assertEquals("The object cannot be created", exception.getMessage());
-        builder.setMileage(-100).setNumber(1);
+        builder.setNumber(1).setMileage(-100);
         assertFalse(bus.checkBuilding());
         exception = assertThrows(IllegalArgumentException.class, () -> builder.build());
         assertEquals("The object cannot be created", exception.getMessage());

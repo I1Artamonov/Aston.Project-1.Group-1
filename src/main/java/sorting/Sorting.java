@@ -13,28 +13,20 @@ import java.util.List;
  * Description: A class for sorting buses
  */
 public class Sorting {
-    public static String selectSorting() {
-        return "Choose sorting method: " +
-                "to sort by models press 1," +
-                "to sort by mileage press 2," +
-                "to sort by number press 3";
-    }
-
     /**
      * @ Method Name: selectSorting
      * @ Description: creation a comparator for sorting
      * @ param      : [int] [number] -> user-selected number of sorting
      * @ return     : java.util.Comparator<bus.Bus>
      */
-    public Comparator<Bus> selectComparator(int number) {
+    public static Comparator<Bus> selectComparator(int number) {
         Comparator<Bus> comparator;
         switch (number) {
-            case 1 -> comparator = Comparator.comparing(Bus::getModel)
+            case 1 -> comparator = Comparator.naturalOrder();
+            case 2 -> comparator = Comparator.comparing(Bus::getModel)
                     .thenComparing(Bus::getMileage).thenComparing(Bus::getNumber);
-            case 2 -> comparator = Comparator.comparingInt(Bus::getMileage)
+            case 3 -> comparator = Comparator.comparingInt(Bus::getMileage)
                     .thenComparing(Bus::getModel).thenComparing(Bus::getNumber);
-            case 3 -> comparator = Comparator.comparingInt(Bus::getNumber)
-                    .thenComparing(Bus::getModel).thenComparing(Bus::getMileage);
             default -> throw new IllegalArgumentException("Incorrect sorting choice");
         }
         return comparator;
@@ -47,7 +39,7 @@ public class Sorting {
      * the list of buses and the comparator for sort
      * @ return     : java.util.List<bus.Bus>
      */
-    public List<Bus> selectionSort(List<Bus> list, Comparator<Bus> comparator) {
+    public static List<Bus> selectionSort(List<Bus> list, Comparator<Bus> comparator) {
         for (int i = 0; i < list.size(); i++) {
             int minIndex = i;
             Bus minBus = list.get(i);
@@ -76,7 +68,7 @@ public class Sorting {
      * the list of buses and the number of user-selected field
      * @ return     : java.util.List<bus.Bus>
      */
-    public List<Bus> sortEvenKeepOdd(List<Bus> buses) {
+    public static List<Bus> sortEvenKeepOdd(List<Bus> buses) {
         List<Integer> evenIndices = new ArrayList<>();
         List<Bus> evenValues = new ArrayList<>();
         for (int i = 0; i < buses.size(); i++) {
