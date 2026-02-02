@@ -1,5 +1,5 @@
 
-import CustomCollections.CustomList;
+import customCollections.CustomList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

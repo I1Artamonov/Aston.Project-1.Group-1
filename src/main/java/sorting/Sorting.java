@@ -1,6 +1,6 @@
 package sorting;
 
-import bus.Bus;
+import entity.Bus;
 
 import java.util.ArrayList;
 import java.util.Comparator;
