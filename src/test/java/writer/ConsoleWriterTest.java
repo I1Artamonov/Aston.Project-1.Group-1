@@ -1,53 +1,74 @@
-//package writer;
-//
-//import org.junit.jupiter.api.AfterEach;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import java.io.ByteArrayOutputStream;
-//import java.io.PrintStream;
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//
-//class ConsoleWriterTest {
-//
-//    private final PrintStream originalOut = System.out;
-//    private ByteArrayOutputStream buffer;
-//
-//    @BeforeEach
-//    void setUp() {
-//        buffer = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(buffer));
-//    }
-//
-//    @AfterEach
-//    void tearDown() {
-//        System.setOut(originalOut);
-//    }
-//
-//    @Test
-//    void write_whenNull_printsNothing() {
-//        ConsoleWriterTest<String> writer = new ConsoleWriterTest<>();
-//        writer.write(null);
-//
-//        assertEquals("", buffer.toString());
-//    }
-//
-//    @Test
-//    void write_printsObjectToString() {
-//        ConsoleWriterTest<String> writer = new ConsoleWriterTest<>();
-//        writer.write("hello");
-//
-//        assertEquals("hello" + System.lineSeparator(), buffer.toString());
-//    }
-//
-//    @Test
-//    void writeCollection_printsEachElement() {
-//        ConsoleWriterTest<String> writer = new ConsoleWriterTest<>();
-//        writer.writeCollection(List.of("a", "b"));
-//
-//        String expected = "a" + System.lineSeparator() + "b" + System.lineSeparator();
-//        assertEquals(expected, buffer.toString());
-//    }
-//}
+package writer;
+
+import org.junit.jupiter.api.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ConsoleWriterTest {
+
+    private ConsoleWriter<String> writer;
+
+    private PrintStream originalOut;
+    private ByteArrayOutputStream out;
+
+    @BeforeEach
+    void setUp() {
+        writer = new ConsoleWriter<>();
+
+        originalOut = System.out;
+        out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out, true, StandardCharsets.UTF_8));
+    }
+
+    @AfterEach
+    void tearDown() {
+        System.setOut(originalOut);
+    }
+
+    private String output() {
+        return out.toString(StandardCharsets.UTF_8);
+    }
+
+    @Test
+    void write_null_printsNothing() {
+        writer.write(null);
+        assertEquals("", output());
+    }
+
+    @Test
+    void write_printsSingleLine() {
+        writer.write("hello");
+        assertEquals("hello" + System.lineSeparator(), output());
+    }
+
+    @Test
+    void writeCollection_null_printsNothing() {
+        writer.writeCollection(null);
+        assertEquals("", output());
+    }
+
+    @Test
+    void writeCollection_printsEachOnNewLine() {
+        writer.writeCollection(List.of("a", "b", "c"));
+
+        String expected =
+                "a" + System.lineSeparator() +
+                        "b" + System.lineSeparator() +
+                        "c" + System.lineSeparator();
+
+        assertEquals(expected, output());
+    }
+
+    @Test
+    void writeCollection_containsNull_throwsNpe() {
+        // В вашей реализации нет проверки на null внутри коллекции:
+        // System.out.println(value.toString());
+        assertThrows(NullPointerException.class,
+                () -> writer.writeCollection(List.of("a", null, "b")));
+    }
+}
