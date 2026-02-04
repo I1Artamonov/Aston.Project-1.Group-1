@@ -2,7 +2,7 @@ package parser;
 
 
 import entity.Bus;
-import entity.BusBuilder;
+
 
 public class BusParser implements Parser {
     @Override
@@ -10,21 +10,22 @@ public class BusParser implements Parser {
 
         if (line == null || line.isBlank()) {
             System.out.println("Пустая строка.");
+            return null;
         }
 
-        assert line != null;
-        String[] parts = line.split(",");
+        String[] parts = line.trim().split(",");
 
         if (parts.length != 3) {
-            System.out.println("Колличество полей должно быть соответсвующим.");
+            System.out.println("Количество полей должно быть соответствующим.");
+            return null;
         }
 
-        int number = Integer.parseInt(parts[0].trim());
-        String model = parts[1].trim();
-        int mileage = Integer.parseInt(parts[2].trim());
+        int number = Integer.parseInt(parts[0]);
+        String model = parts[1];
+        int mileage = Integer.parseInt(parts[2]);
 
         validate(number, model, mileage);
-        return new BusBuilder().setMileage(mileage).setModel(model).setNumber(number).build();
+        return new Bus.BusBuilder().setMileage(mileage).setModel(model).setNumber(number).build();
 
 
 

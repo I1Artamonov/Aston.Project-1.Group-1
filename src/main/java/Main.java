@@ -9,9 +9,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Здравствуй, дорогой друг!\n" +
-                "Тебя приветствует база данных нашего автобусного парка.\n" +
-                "Загружаем меню...\n");
+        System.out.println("""
+                Здравствуй, дорогой друг!
+                Тебя приветствует база данных нашего автобусного парка.
+                Загружаем меню...
+                """);
 
         startProgram();
     }
@@ -36,8 +38,10 @@ public class Main {
             if (menuCommands.containsKey(userInput)) {
                 menuCommands.get(userInput).execute();
             } else {
-                System.out.println("Вы указали отсутствующий пункт меню.\n" +
-                        "Сделайте выбор заново.\n");
+                System.out.println("""
+                        Вы указали отсутствующий пункт меню.
+                        Сделайте выбор заново.
+                        """);
             }
         }
     }

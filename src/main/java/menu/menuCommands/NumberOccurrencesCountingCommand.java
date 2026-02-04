@@ -1,7 +1,6 @@
 package menu.menuCommands;
 
 import entity.Bus;
-import entity.BusBuilder;
 import menu.BusRepository;
 import menu.userInputValidations.IsExistsString;
 import menu.userInputValidations.IsNumberValidation;
@@ -57,13 +56,7 @@ public class NumberOccurrencesCountingCommand implements Command {
             }
         }
 
-        BusBuilder builder = new BusBuilder();
-        builder.setNumber(number);
-        builder.setModel(model);
-        builder.setMileage(mileage);
-
-        Bus bus = builder.build();
-
+        Bus bus = new Bus.BusBuilder().setMileage(mileage).setModel(model).setNumber(number).build();
         BusRepository.buses.countOccurrencesParallel(bus);
     }
 }

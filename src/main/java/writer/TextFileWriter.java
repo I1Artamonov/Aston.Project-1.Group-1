@@ -1,4 +1,4 @@
-package writer; // объявляем пакет writer
+package writer;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -13,6 +13,7 @@ public class TextFileWriter<T> implements ResultWriter<T> {
     @Override
     public void write(T obj) {
         if (obj == null) {
+            System.out.println("Объекта не существует.");
             return;
         }
         try (BufferedWriter writer = Files.newBufferedWriter(
@@ -23,20 +24,20 @@ public class TextFileWriter<T> implements ResultWriter<T> {
             writer.write(obj.toString());
             writer.newLine();
         } catch (IOException ignored) {
-
+            System.out.println("Ошибка записи объекта.");
         }
     }
 
     @Override
     public void writeCollection(Iterable<? extends T> values) {
         if (values == null) {
+            System.out.println("Коллекции не существует.");
             return;
         }
         try (BufferedWriter writer = Files.newBufferedWriter(
                 FILE,
                 StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND
-        )) {
+                StandardOpenOption.APPEND)) {
 
             for (T value : values) {
                 if (value == null) continue;
@@ -44,6 +45,7 @@ public class TextFileWriter<T> implements ResultWriter<T> {
                 writer.newLine();
             }
         } catch (IOException ignored) {
+            System.out.println("Ошибка записи коллекции.");
 
         }
     }

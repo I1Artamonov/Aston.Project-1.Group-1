@@ -1,8 +1,11 @@
 package menu.menuCommands;
 
+import entity.Bus;
 import menu.BusRepository;
 import menu.showMenu.MenuCollections;
 import menu.userInputValidations.FilePathValidation;
+import writer.ResultWriter;
+import writer.TextFileWriter;
 
 import java.util.Scanner;
 
@@ -38,10 +41,9 @@ public class ShowAllBusesCommand implements Command {
 
         String userPath = scanner.nextLine().trim();
 
-        if (new FilePathValidation(userPath).pathValidation() == true) {
-            //TODO: раскомментировать после слияния 2 строки. Пока не вижу метод
-            //TextFileWriter textFileWriter = new TextFileWriter<>(Path.of(userPath));
-            //textFileWriter.writeCollection(BusRepository.buses);
+        if (new FilePathValidation(userPath).pathValidation()) {
+            ResultWriter<Bus> writer = new TextFileWriter<>();
+            writer.writeCollection(BusRepository.buses);
             return false;
         } else {
             System.out.println("Не корректный путь или формат файла. Попробуйте заново");
