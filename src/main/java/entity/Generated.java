@@ -25,9 +25,7 @@ public interface Generated<T> {
             "Dennis Trident", "Gräf & Stift BB15", "Solbus SM12", "LIAZ 5256"
     };
 
-    T generate();
-
-    static int getInt(int upper){
+    static int getInt(int upper) {
         return new Random().nextInt(upper);
     }
 
@@ -39,4 +37,6 @@ public interface Generated<T> {
     static int generateNumber(int upper, int lower) {
         return getInt(upper) + lower;
     }
+
+    T generate();
 }

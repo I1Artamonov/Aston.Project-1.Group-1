@@ -1,5 +1,6 @@
 package customCollections;
 import lombok.EqualsAndHashCode;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -45,9 +46,11 @@ public class CustomList<E> extends CustomCollection<E> implements Iterable<E> {
     }
 
     public void add(E element) {
-        if (needGrow()) grow();
-        elements[size] = element;
-        size++;
+        if (elements != null) {
+            if (needGrow()) grow();
+            elements[size] = element;
+            size++;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -58,6 +61,15 @@ public class CustomList<E> extends CustomCollection<E> implements Iterable<E> {
             );
         }
         return (E) elements[index];
+    }
+
+    public void set(int index, E element) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException(
+                    "Index " + index + " out of bounds for size " + size
+            );
+        }
+        elements[index] = element;
     }
 
     public int find(E obj) {

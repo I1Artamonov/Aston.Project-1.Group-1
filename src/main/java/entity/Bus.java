@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Bus extends Car implements Comparable<Bus>, Generated<Bus> {
     private int number;
 
-    protected Bus(BusBuilder builder) {
+    private Bus(BusBuilder builder) {
         super(builder.getModel(), builder.getMileage());
         this.number = builder.getNumber();
     }
@@ -29,26 +29,60 @@ public class Bus extends Car implements Comparable<Bus>, Generated<Bus> {
     @Override
     public Bus generate() {
         return new BusBuilder()
+                .setNumber(Generated.generateNumber(100, 1))
                 .setModel(Generated.generateFromList(busModels))
                 .setMileage(Generated.generateNumber(1000, 0))
-                .setNumber(Generated.generateNumber(100, 1))
                 .build();
     }
 
     @Override
     public int compareTo(Bus bus) {
+        if (this.number != bus.getNumber()) {
+            return this.number - bus.getNumber();
+        }
         if (this.getModel().compareTo(bus.getModel()) != 0) {
             return this.getModel().compareTo(bus.getModel());
         }
-        if (this.getMileage() != bus.getMileage()) {
-            return Integer.compare(this.getMileage(), bus.getMileage());
-        }
-        return Integer.compare(number, bus.getNumber());
+        return this.getMileage() - bus.getMileage();
     }
 
     @Override
     public String toString() {
-        return String.format("model: %25s | mileage:%5d | number:%5d",
-                getModel(), getMileage(), number);
+        return String.format("number:%5d | model: %25s | mileage:%5d",
+                number, getModel(), getMileage());
+    }
+
+    @Getter
+    public static class BusBuilder {
+        private int number;
+        private String model;
+        private int mileage;
+
+        public BusBuilder setNumber(int number) {
+            this.number = number;
+            return this;
+        }
+
+        public BusBuilder setModel(String model) {
+            this.model = model;
+            return this;
+        }
+
+        public BusBuilder setMileage(int mileage) {
+            this.mileage = mileage;
+            return this;
+        }
+
+        public Bus build() {
+            Bus bus = new Bus(this);
+            if (bus.checkBuilding()) {
+                return bus;
+            } else {
+                System.out.println("The object cannot be created. Number must be > 0, received number="
+                        + getNumber() + "; Model must not be empty, received model=" + model +
+                        "; Mileage must be >= 0, received mileage=" + mileage);
+                return null;
+            }
+        }
     }
 }
