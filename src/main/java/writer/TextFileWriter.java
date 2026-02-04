@@ -1,4 +1,4 @@
-package writer; 
+package writer;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

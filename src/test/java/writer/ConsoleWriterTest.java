@@ -66,8 +66,6 @@ class ConsoleWriterTest {
 
     @Test
     void writeCollection_containsNull_throwsNpe() {
-        // В вашей реализации нет проверки на null внутри коллекции:
-        // System.out.println(value.toString());
         assertThrows(NullPointerException.class,
                 () -> writer.writeCollection(List.of("a", null, "b")));
     }

@@ -24,7 +24,7 @@ class TextFileWriterTest {
 
     @AfterEach
     void tearDown() throws IOException {
-        // если файл превратим в директорию в тесте — чистим рекурсивно
+
         if (Files.exists(FILE)) {
             if (Files.isDirectory(FILE)) {
                 Files.delete(FILE);
@@ -64,7 +64,7 @@ class TextFileWriterTest {
 
     @Test
     void writeCollection_writesAllNonNullValues() throws IOException {
-        // Arrays.asList допускает null
+
         writer.writeCollection(Arrays.asList("a", null, "b", "c"));
 
         assertTrue(Files.exists(FILE));
@@ -73,12 +73,12 @@ class TextFileWriterTest {
 
     @Test
     void write_ignoresIOException_whenPathIsDirectory() throws IOException {
-        // создаём директорию с именем output.txt => newBufferedWriter(FILE) упадёт с IOException
+
         Files.createDirectories(FILE.getParent());
         Files.createDirectory(FILE);
 
         assertDoesNotThrow(() -> writer.write("abc"));
-        // И ничего не записано: это директория
+
         assertTrue(Files.isDirectory(FILE));
     }
 
