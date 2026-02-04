@@ -1,23 +1,22 @@
 package writer;
+public class ConsoleWriter<T> implements ResultWriter<T> {
 
-import java.io.IOException;
-import java.io.PrintStream;
-
-public class ConsoleWriter<T> extends AbstractWriter<T> {
-
-    private final PrintStream out;
-
-    public ConsoleWriter() {
-        this(System.out, Formatter.defaultFormatter());
-    }
-
-    public ConsoleWriter(PrintStream out, Formatter<T> formatter) {
-        super(formatter);
-        this.out = out;
+    @Override
+    public void write(T obj) {
+        if (obj == null) {
+            return;
+        }
+        System.out.println(obj.toString());
     }
 
     @Override
-    protected void writeLine(String line) throws IOException {
-        out.println(line);
+    public void writeCollection(Iterable<? extends T> values) {
+        if (values == null) {
+            return;
+        }
+
+        for (T value : values) {
+            System.out.println(value.toString());
+        }
     }
 }

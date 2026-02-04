@@ -1,49 +1,50 @@
-package writer;
+package writer; // объявляем пакет writer
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.Objects;
 
-public class TextFileWriter<T> extends AbstractWriter<T> {
+public class TextFileWriter<T> implements ResultWriter<T> {
 
-    private final Path file;
-    private final Charset charset;
-    private BufferedWriter writer;
-
-    public TextFileWriter(Path file) {
-        this(file, Charset.forName("UTF-8"), Formatter.defaultFormatter());
-    }
-
-    public TextFileWriter(Path file, Charset charset, Formatter<T> formatter) {
-        super(formatter);
-        this.file = Objects.requireNonNull(file);
-        this.charset = Objects.requireNonNull(charset);
-    }
+    private static final Path FILE = Path.of("src", "main", "resources", "output.txt");
 
     @Override
-    protected void beforeWrite() throws IOException {
-        writer = Files.newBufferedWriter(
-                file,
-                charset,
+    public void write(T obj) {
+        if (obj == null) {
+            return;
+        }
+        try (BufferedWriter writer = Files.newBufferedWriter(
+                FILE,
                 StandardOpenOption.CREATE,
                 StandardOpenOption.APPEND
-        );
+        )) {
+            writer.write(obj.toString());
+            writer.newLine();
+        } catch (IOException ignored) {
+
+        }
     }
 
     @Override
-    protected void writeLine(String line) throws IOException {
-        writer.write(line);
-        writer.newLine();
-    }
+    public void writeCollection(Iterable<? extends T> values) {
+        if (values == null) {
+            return;
+        }
+        try (BufferedWriter writer = Files.newBufferedWriter(
+                FILE,
+                StandardOpenOption.CREATE,
+                StandardOpenOption.APPEND
+        )) {
 
-    @Override
-    protected void close() throws IOException {
-        if (writer != null) {
-            writer.close();
+            for (T value : values) {
+                if (value == null) continue;
+                writer.write(value.toString());
+                writer.newLine();
+            }
+        } catch (IOException ignored) {
+
         }
     }
 }

@@ -1,7 +1,8 @@
 package writer;
 
-import java.io.IOException;
-
 public interface ResultWriter<T> {
-    void write(Iterable<T> data) throws IOException;
+
+    public void write(T obj);
+
+    public void writeCollection(Iterable<? extends T> values);
 }
