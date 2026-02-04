@@ -17,7 +17,6 @@ public class Main {
     }
 
     private static void startProgram() {
-        boolean isRunning = true;
 
         Map<String, Command> menuCommands = new HashMap<>();
         menuCommands.put("1", new AddBusCommand());
@@ -28,7 +27,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        while(isRunning) {
+        while(true) {
 
             MenuCollections.getMenuMap().get("main").show();
 

@@ -3,9 +3,7 @@ package menu.menuCommands;
 import menu.BusRepository;
 import menu.showMenu.MenuCollections;
 import menu.userInputValidations.FilePathValidation;
-import writer.TextFileWriter;
 
-import java.nio.file.Path;
 import java.util.Scanner;
 
 public class ShowAllBusesCommand implements Command {
@@ -22,18 +20,18 @@ public class ShowAllBusesCommand implements Command {
 
             userInput = scanner.nextLine().trim();
 
-            if (userInput.startsWith("1")) {
+            if (userInput.equals("1")) {
                 BusRepository.buses.forEach(System.out::println);
                 break;
-            } else if (userInput.startsWith("2")) {
-                isRunning = wrightToFile();
+            } else if (userInput.equals("2")) {
+                isRunning = writeToFile();
             } else {
                 System.out.println("Указанного метода сортировки не существует. Укажите корректное значение");
             }
         }
     }
 
-    private boolean wrightToFile() {
+    private boolean writeToFile() {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите путь к файлу. Файл должен быть в формате .txt");

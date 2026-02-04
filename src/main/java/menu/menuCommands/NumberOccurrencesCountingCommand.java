@@ -49,7 +49,7 @@ public class NumberOccurrencesCountingCommand implements Command {
             System.out.println("Введите пробег (целое число)");
             userInput = scanner.nextLine().trim();
 
-            if (isNumberValidation.isNumber(userInput) > 0) {
+            if (isNumberValidation.isNumber(userInput) >= 0) {
                 mileage = Integer.parseInt(userInput);
                 break;
             } else {

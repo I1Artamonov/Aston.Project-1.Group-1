@@ -23,7 +23,7 @@ public class AddBusCommand implements Command {
 
         Scanner scanner = new Scanner(System.in);
 
-        while (numberOfMethod < 0 && busesCount < 0) {
+        while (numberOfMethod < 0 || busesCount < 0) {
 
             System.out.println("Укажите количество добавляемых автобусов:");
 
@@ -31,7 +31,7 @@ public class AddBusCommand implements Command {
             busesCount = new BusesCountValidation(count).busesCountValidation();
 
             if (busesCount <= 0) {
-                System.out.println("Введите положительное число");
+                System.out.println("Введите целое число больше 0");
                 continue;
             }
 

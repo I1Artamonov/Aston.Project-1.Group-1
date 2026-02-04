@@ -25,11 +25,13 @@ public class FromFileAdd implements MenuBusAdding {
                 "номер (целое число), модель, пробег (целое число)");
 
         Scanner scanner = new Scanner(System.in);
-        String userPath = scanner.nextLine().trim();
+        String userPath = "";
 
         boolean isRunningLoop = true;
 
         while (isRunningLoop) {
+            userPath = scanner.nextLine().trim();
+
             if (new FilePathValidation(userPath).pathValidation()) {
                 isRunningLoop = false;
             } else {

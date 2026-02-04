@@ -22,15 +22,15 @@ public class SortByParameterAndShowCommand implements Command {
 
             userInput = scanner.nextLine().trim();
             //TODO: раскомментировать после слияния 2 строки. Пока вижу только старую реализацию методов с List
-            if (userInput.startsWith("1")) {
+            if (userInput.equals("1")) {
                 //BusRepository.buses = sorting.selectionSort(BusRepository.buses, sorting.selectComparator(1));
-            } else if (userInput.startsWith("2")) {
+            } else if (userInput.equals("2")) {
                 //BusRepository.buses = sorting.selectionSort(BusRepository.buses, sorting.selectComparator(2));
-            } else if (userInput.startsWith("3")) {
+            } else if (userInput.equals("3")) {
                 //BusRepository.buses = sorting.selectionSort(BusRepository.buses, sorting.selectComparator(3));
-            } else if (userInput.startsWith("4")) {
+            } else if (userInput.equals("4")) {
                 //BusRepository.buses = sorting.sortEvenKeepOdd(BusRepository.buses);
-            } else if (userInput.startsWith("0")) {
+            } else if (userInput.equals("0")) {
                 break;
             } else {
                 System.out.println("Указанного метода сортировки не существует");

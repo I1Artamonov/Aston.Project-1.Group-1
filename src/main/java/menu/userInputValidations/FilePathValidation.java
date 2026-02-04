@@ -9,6 +9,6 @@ public class FilePathValidation {
 
     public boolean pathValidation() {
         return userPath != null && !userPath.isEmpty() && userPath.length() > 6
-                && (userPath.endsWith(".txt"));
+                && (userPath.endsWith(".txt")); // минимальная длина пути + ".txt"
     }
 }
